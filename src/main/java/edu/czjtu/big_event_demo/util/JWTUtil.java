@@ -6,11 +6,11 @@ import java.util.Map;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
-import lombok.Value;
-
 public class JWTUtil {
-    static public int expiresTime = 60 * 60 * 24;
+    // token过期时间 7天
+    static public int expiresTime = 1000 * 60 * 60 * 24 * 7;
 
+    // 密钥 
     static public String secret = "czjtu";
 
     public static String generateToken(Map<String, Object> claims) {

@@ -18,8 +18,10 @@ import edu.czjtu.big_event_demo.service.UserService;
 import edu.czjtu.big_event_demo.util.JWTUtil;
 import edu.czjtu.big_event_demo.util.MD5Util;
 import edu.czjtu.big_event_demo.util.ThreadLocalUtil;
+import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Validated
@@ -64,15 +66,15 @@ public class UserController {
 
     @GetMapping()
     public Result<User> getUserInfo() throws Exception {
-            User user = userService.getById(ThreadLocalUtil.getUserId());
-            if (user == null) {
-                return Result.error("用户不存在");
-            } else {
-                return Result.success(user);
-            }
+        User user = userService.getById(ThreadLocalUtil.getUserId());
+        if (user == null) {
+            return Result.error("用户不存在");
+        } else {
+            return Result.success(user);
+        }
     }
-    
-    @PutMapping("/")
+
+    @PutMapping()
     public Result update(@Validated @RequestBody User user) {
         // 调用Service层方法进行更新
         user.setUpdateTime(LocalDateTime.now());
@@ -80,5 +82,44 @@ public class UserController {
         return Result.success();
     }
 
-    
+    @PatchMapping("/update_avatar")
+    public Result updateAvatar(@RequestParam String avatar_url) {
+        User user = userService.getById(ThreadLocalUtil.getUserId());
+        user.setUserPic(avatar_url);
+        user.setUpdateTime(LocalDateTime.now());
+        if (userService.updateById(user)) {
+            return Result.success("更新头像成功");
+        } else {
+            return Result.error("更新头像失败");
+        }
+    }
+
+    @PatchMapping("/update_pwd")
+    public Result updatePwd(@RequestBody Map<String, String> params) {
+        String oldPwd = params.get("OPWD");
+        String newPwd = params.get("NEWPWD");
+        String repwd = params.get("R1PWD");
+
+        // 校验参数是否为空
+        if (StringUtils.isEmpty(oldPwd) || StringUtils.isEmpty(newPwd) || StringUtils.isEmpty(repwd)) {
+            return Result.error("缺少必要的参数");
+        }
+
+        // 校验原密码是否正确
+        User loginUser = userService.getUserByUsername(ThreadLocalUtil.getUserName());
+        if (!MD5Util.getMD5String(oldPwd).equals(loginUser.getPassword())) {
+            return Result.error("原密码填写不正确");
+        }
+
+        // 校验新密码与确认新密码是否一致
+        if (!newPwd.equals(repwd)) {
+            return Result.error("两次填写的新密码不一致");
+        }
+        loginUser.setPassword(MD5Util.getMD5String(newPwd));
+        if (userService.updateById(loginUser)) {
+            return Result.success("密码修改成功");
+        } else {
+            return Result.error("密码修改失败");
+        }
+    }
 }

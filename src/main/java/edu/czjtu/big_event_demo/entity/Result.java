@@ -4,26 +4,84 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//统一响应结果
+/**
+ * 通用响应结果封装类，用于统一接口返回结构。
+ *
+ * @param <T> 响应数据类型
+ */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Result<T> {
-    private Integer code;//业务状态码  0-成功  1-失败
-    private String message;//提示信息
-    private T data;//响应数据
 
-    //快速返回操作成功响应结果(带响应数据)
+    /** 成功状态码 */
+    public static final int SUCCESS_CODE = 0;
+
+    /** 错误状态码 */
+    public static final int ERROR_CODE = 1;
+
+    /** 响应状态码：0 - 成功，1 - 失败 */
+    private Integer code;
+
+    /** 提示信息 */
+    private String message;
+
+    /** 响应数据 */
+    private T data;
+
+    /**
+     * 返回成功结果（带数据）
+     *
+     * @param <E>  数据类型
+     * @param data 响应数据
+     * @return 成功的 Result 对象
+     */
     public static <E> Result<E> success(E data) {
-        return new Result<>(0, "操作成功", data);
+        return new Result<>(SUCCESS_CODE, "操作成功", data);
     }
 
-    //快速返回操作成功响应结果
-    public static Result success() {
-        return new Result(0, "操作成功", null);
+    /**
+     * 返回成功结果（无数据）
+     *
+     * @param <E> 泛型类型
+     * @return 成功的 Result 对象
+     */
+    public static <E> Result<E> success() {
+        return new Result<>(SUCCESS_CODE, "操作成功", null);
     }
 
-    public static Result error(String message) {
-        return new Result(1, message, null);
+    /**
+     * 返回带自定义消息的成功结果
+     *
+     * @param <E>     数据类型
+     * @param message 自定义成功提示信息
+     * @param data    响应数据
+     * @return 成功的 Result 对象
+     */
+    public static <E> Result<E> success(String message, E data) {
+        return new Result<>(SUCCESS_CODE, message, data);
+    }
+
+    /**
+     * 返回失败结果（仅错误消息）
+     *
+     * @param <E>     泛型类型
+     * @param message 错误提示信息
+     * @return 失败的 Result 对象
+     */
+    public static <E> Result<E> error(String message) {
+        return new Result<>(ERROR_CODE, message, null);
+    }
+
+    /**
+     * 返回失败结果（带数据）
+     *
+     * @param <E>     数据类型
+     * @param message 错误提示信息
+     * @param data    响应数据
+     * @return 失败的 Result 对象
+     */
+    public static <E> Result<E> error(String message, E data) {
+        return new Result<>(ERROR_CODE, message, data);
     }
 }

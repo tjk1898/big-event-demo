@@ -73,10 +73,12 @@ public class UserController {
     }
     
     @PutMapping("/")
-    public Result update(@RequestBody User user) {
+    public Result update(@Validated @RequestBody User user) {
         // 调用Service层方法进行更新
         user.setUpdateTime(LocalDateTime.now());
         userService.updateById(user);
         return Result.success();
     }
+
+    
 }

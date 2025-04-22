@@ -7,6 +7,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import edu.czjtu.big_event_demo.entity.Result;
 import edu.czjtu.big_event_demo.util.JWTUtil;
+import edu.czjtu.big_event_demo.util.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             try {
                 log.debug("开始校验token");
                 Map<String, Object> tokenMap = JWTUtil.parseToken(tokenString);
+                ThreadLocalUtil.setUserId((Integer) tokenMap.get("userId"));
+                ThreadLocalUtil.setUserName((String) tokenMap.get("username"));
                 return true;
             } catch (Exception e) {
                 response.setContentType("application/json;charset=UTF-8");
@@ -37,5 +40,10 @@ public class LoginInterceptor implements HandlerInterceptor {
                 return false;
             }
         }
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        ThreadLocalUtil.clear();  // 请求完成后清理数据
     }
 }

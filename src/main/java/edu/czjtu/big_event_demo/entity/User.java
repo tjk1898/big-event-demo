@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -14,6 +15,7 @@ public class User {
     @TableId(type = IdType.AUTO)
     private Integer id;//主键ID
     private String username;//用户名
+    @JsonIgnore
     private String password;//密码
     private String nickname;//昵称
     private String email;//邮箱

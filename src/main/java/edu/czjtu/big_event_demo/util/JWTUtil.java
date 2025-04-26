@@ -9,7 +9,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import lombok.Value;
 
 public class JWTUtil {
-    static public int expiresTime = 60 * 60 * 24;
+    static public int expiresTime = 1000 * 60 * 60 * 24 * 7;
 
     static public String secret = "czjtu";
 

@@ -77,16 +77,15 @@ public class UserController {
     @PutMapping()
     public Result update(@Validated @RequestBody User user) {
         // 调用Service层方法进行更新
-        user.setUpdateTime(LocalDateTime.now());
         userService.updateById(user);
         return Result.success();
     }
 
     @PatchMapping("/update_avatar")
-    public Result updateAvatar(@RequestParam String avatar_url) {
-        User user = userService.getById(ThreadLocalUtil.getUserId());
-        user.setUserPic(avatar_url);
-        user.setUpdateTime(LocalDateTime.now());
+    public Result updateAvatar(@RequestParam String avatarUrl) {
+        User user = new User();
+        user.setId(ThreadLocalUtil.getUserId());
+        user.setUserPic(avatarUrl);
         if (userService.updateById(user)) {
             return Result.success("更新头像成功");
         } else {
@@ -115,8 +114,11 @@ public class UserController {
         if (!newPwd.equals(repwd)) {
             return Result.error("两次填写的新密码不一致");
         }
-        loginUser.setPassword(MD5Util.getMD5String(newPwd));
-        if (userService.updateById(loginUser)) {
+
+        User user = new User();
+        user.setId(ThreadLocalUtil.getUserId());
+        user.setPassword(MD5Util.getMD5String(newPwd));
+        if (userService.updateById(user)) {
             return Result.success("密码修改成功");
         } else {
             return Result.error("密码修改失败");

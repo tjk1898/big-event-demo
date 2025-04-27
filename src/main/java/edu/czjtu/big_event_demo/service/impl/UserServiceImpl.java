@@ -2,8 +2,6 @@ package edu.czjtu.big_event_demo.service.impl;
 
 import java.time.LocalDateTime;
 
-import javax.management.Query;
-
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -12,8 +10,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import edu.czjtu.big_event_demo.entity.User;
 import edu.czjtu.big_event_demo.mapper.UserMapper;
 import edu.czjtu.big_event_demo.service.UserService;
-import edu.czjtu.big_event_demo.util.MD5Util;
-
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {

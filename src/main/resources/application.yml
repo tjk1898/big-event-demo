@@ -9,6 +9,9 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true # 驼峰命名规则
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+project:
+  path: /Users/jinkun.tian/edu/06-WebFramework/class2-demo/big-event-demo
       
 logging:
   level:

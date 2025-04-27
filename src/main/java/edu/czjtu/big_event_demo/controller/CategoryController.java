@@ -1,9 +1,14 @@
 package edu.czjtu.big_event_demo.controller;
 
+import edu.czjtu.big_event_demo.entity.ADD;
 import edu.czjtu.big_event_demo.entity.Category;
 import edu.czjtu.big_event_demo.entity.Result;
+import edu.czjtu.big_event_demo.entity.UPDATE;
 import edu.czjtu.big_event_demo.service.CategoryService;
+import edu.czjtu.big_event_demo.util.ThreadLocalUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +22,15 @@ public class CategoryController {
 
     // 添加分类
     @PostMapping
-    public Result<Void> add(@RequestBody Category category) {
+    public Result<Void> add(@RequestBody @Validated(ADD.class) Category category) {
+        category.setCreateUser(ThreadLocalUtil.getUserId());
         categoryService.save(category);
         return Result.success();
     }
 
     // 修改分类
     @PutMapping
-    public Result<Void> update(@RequestBody Category category) {
+    public Result<Void> update(@RequestBody @Validated(UPDATE.class) Category category) {
         category.setUpdateTime(null);
         categoryService.updateById(category);
         return Result.success();

@@ -2,7 +2,9 @@ package edu.czjtu.big_event_demo.entity;
 
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -19,6 +21,8 @@ public class Article {
     private String state;//发布状态 已发布|草稿
     private Integer categoryId;//文章分类id
     private Integer createUser;//创建人ID
-    private LocalDateTime createTime;//创建时间
-    private LocalDateTime updateTime;//更新时间
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;// 创建时间    
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;// 更新时间
 }

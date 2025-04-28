@@ -20,6 +20,9 @@ public class UploadController {
     @Value("${project.path}")
     private String projectPath;
 
+    @Value("${file-upload.url-prefix}")
+    private String fileUrlPrefix;
+
     @PostMapping
     public Result<String> upload(MultipartFile image) throws IOException {
         // 获取原始文件名
@@ -41,6 +44,6 @@ public class UploadController {
         image.transferTo(new File(dir, filename));
 
         // 返回文件访问路径
-        return Result.success("http://localhost:8080/upload/" + filename);
+        return Result.success(fileUrlPrefix + filename);
     }
 }

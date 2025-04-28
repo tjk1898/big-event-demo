@@ -1,6 +1,7 @@
 package edu.czjtu.big_event_demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import edu.czjtu.big_event_demo.entity.Article;
 import edu.czjtu.big_event_demo.service.ArticleService;
@@ -19,7 +20,7 @@ public class ArticleController {
 
     // 新增文章
     @PostMapping
-    public Result<String> add(@RequestBody Article article) {
+    public Result<String> add(@Validated @RequestBody Article article) {
         article.setCreateUser(ThreadLocalUtil.getUserId());
         articleService.save(article);
         return Result.success();

@@ -45,7 +45,7 @@ public class User {
      * 昵称，长度1~10且不能包含空格
      */
     @NotEmpty(message = "昵称不能为空")
-    @Pattern(regexp = "^[\\S]{1,10}$", message = "昵称长度必须在1-10之间，且不能包含空格")
+    @Pattern(regexp = "^[\\S]{2,10}$", message = "昵称长度必须在2-10之间，且不能包含空格")
     private String nickname;
 
     /**

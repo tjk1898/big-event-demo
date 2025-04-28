@@ -21,7 +21,7 @@ public class Category {
     @NotNull(groups = UPDATE.class)
     private Integer id;// 主键ID
     @NotNull(groups = Default.class)
-    @Size(min = 10, max = 100, groups = { ADD.class, UPDATE.class })
+    @Size(min = 1, max = 100, groups = { ADD.class, UPDATE.class })
     private String categoryName;// 分类名称
     private String categoryAlias;// 分类别名
     private Integer createUser;// 创建人ID

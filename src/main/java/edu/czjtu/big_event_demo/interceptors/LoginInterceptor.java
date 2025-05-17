@@ -1,16 +1,15 @@
 package edu.czjtu.big_event_demo.interceptors;
 
-import java.util.Map;
-
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
-
 import edu.czjtu.big_event_demo.entity.Result;
 import edu.czjtu.big_event_demo.util.JWTUtil;
 import edu.czjtu.big_event_demo.util.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import java.util.Map;
 
 @Component
 @Slf4j

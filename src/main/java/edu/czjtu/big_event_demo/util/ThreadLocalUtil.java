@@ -26,12 +26,12 @@ public class ThreadLocalUtil {
         return (String) get("username");
     }
 
-    public static Integer getUserId() {
-        return (Integer) get("userId");
-    }
-
     public static void setUserName(String username) {
         set("username", username);
+    }
+
+    public static Integer getUserId() {
+        return (Integer) get("userId");
     }
 
     public static void setUserId(Integer userId) {

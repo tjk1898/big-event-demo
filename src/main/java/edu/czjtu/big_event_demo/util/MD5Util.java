@@ -7,9 +7,10 @@ import java.security.NoSuchAlgorithmException;
  * MD5加密工具类
  */
 public class MD5Util {
-    
+
     /**
      * 对字符串进行MD5加密
+     *
      * @param str 需要加密的字符串
      * @return 加密后的字符串
      */

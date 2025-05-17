@@ -14,19 +14,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Result<T> {
 
-    /** 成功状态码 */
+    /**
+     * 成功状态码
+     */
     public static final int SUCCESS_CODE = 0;
 
-    /** 错误状态码 */
+    /**
+     * 错误状态码
+     */
     public static final int ERROR_CODE = 1;
 
-    /** 响应状态码：0 - 成功，1 - 失败 */
+    /**
+     * 响应状态码：0 - 成功，1 - 失败
+     */
     private Integer code;
 
-    /** 提示信息 */
+    /**
+     * 提示信息
+     */
     private String message;
 
-    /** 响应数据 */
+    /**
+     * 响应数据
+     */
     private T data;
 
     /**

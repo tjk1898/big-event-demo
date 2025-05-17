@@ -6,7 +6,6 @@ import edu.czjtu.big_event_demo.entity.Result;
 import edu.czjtu.big_event_demo.entity.UPDATE;
 import edu.czjtu.big_event_demo.service.CategoryService;
 import edu.czjtu.big_event_demo.util.ThreadLocalUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

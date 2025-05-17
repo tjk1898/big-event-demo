@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BigEventDemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BigEventDemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BigEventDemoApplication.class, args);
+    }
 
 }

@@ -1,17 +1,5 @@
 package edu.czjtu.big_event_demo.controller;
 
-import java.time.LocalDateTime;
-import java.util.Map;
-
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import edu.czjtu.big_event_demo.entity.Result;
 import edu.czjtu.big_event_demo.entity.User;
 import edu.czjtu.big_event_demo.service.UserService;
@@ -20,9 +8,10 @@ import edu.czjtu.big_event_demo.util.MD5Util;
 import edu.czjtu.big_event_demo.util.ThreadLocalUtil;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.constraints.Pattern;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Validated
 @RestController
@@ -123,5 +112,14 @@ public class UserController {
         } else {
             return Result.error("密码修改失败");
         }
+    }
+
+    @GetMapping("/logout")
+    public Result logout(@RequestHeader(value = "Authorization", required = false) String token) {
+        if (token != null) {
+            JWTUtil.deleteToken(token);
+        }
+        ThreadLocalUtil.clear();
+        return Result.success("登出成功");
     }
 }

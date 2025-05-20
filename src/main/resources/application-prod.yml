@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/big_event
+    username: root
+    password: 123456
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true # 驼峰命名规则
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+project:
+  path: /Users/jinkun.tian/edu/06-WebFramework/class2-demo/big-event-demo
+
+file-upload:
+  url-prefix: "http://localhost:8080/upload/"
+      
+logging:
+  level:
+    root: INFO
+    edu.czjtu.big_event_demo.interceptors: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

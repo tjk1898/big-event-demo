@@ -5,6 +5,8 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.czjtu.big_event_demo.entity.Result;
 import edu.czjtu.big_event_demo.util.JWTUtil;
 import edu.czjtu.big_event_demo.util.ThreadLocalUtil;
@@ -15,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -36,7 +40,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 response.setContentType("application/json;charset=UTF-8");
                 response.setCharacterEncoding("UTF-8");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write(Result.error("请先登录").toString());
+                response.getWriter().write(mapper.writeValueAsString(Result.error("请先登录")));
                 return false;
             }
         }

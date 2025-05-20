@@ -94,7 +94,7 @@ public class UserController {
     }
 
     @PatchMapping("/update_pwd")
-    public Result updatePwd(@RequestBody Map<String, String> params) {
+    public Result updatePwd(@RequestBody Map<String, String> params, @RequestHeader(value = "Authorization", required = true) String token) {
         String oldPwd = params.get("OPWD");
         String newPwd = params.get("NEWPWD");
         String repwd = params.get("R1PWD");
@@ -119,9 +119,16 @@ public class UserController {
         user.setId(ThreadLocalUtil.getUserId());
         user.setPassword(MD5Util.getMD5String(newPwd));
         if (userService.updateById(user)) {
+            JWTUtil.deleteToken(token);
             return Result.success("密码修改成功");
         } else {
             return Result.error("密码修改失败");
         }
+    }
+
+    @GetMapping("/logout")
+    public Result logout(@RequestHeader(value = "Authorization", required = true) String token) {
+        JWTUtil.deleteToken(token);
+        return Result.success("登出成功");
     }
 }
